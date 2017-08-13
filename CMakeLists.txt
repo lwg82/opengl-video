@@ -6,7 +6,8 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
-option(USE_GLEW    "Use glew library" ON)
+option(USE_GLEW        "Use glew library" OFF)
+option(COMPILE_CHAP02  "Compile chap02"   ON)
 
 
 # c++11
@@ -82,13 +83,27 @@ if(USE_GLEW)
 	)
 endif()
 
+set(COMPILE_EXAMPLE
+)	
 
-
-set(EXAMPLES
+if(COMPILE_CHAP02)
+	set(COMPILE_EXAMPLE
+	${COMPILE_EXAMPLE}
 	draw_point
 	chap201
 	chap202
-	chap203)
+	chap203
+	chap204
+	chap205
+	chap206
+	chap207
+	chap208
+	chap209)
+endif()
+
+set(EXAMPLES
+	${COMPILE_EXAMPLE}
+)
 
 
 foreach(EXAMPLE ${EXAMPLES})

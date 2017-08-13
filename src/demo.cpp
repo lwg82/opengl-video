@@ -38,10 +38,12 @@ void demo_app::run(demo_app *app)
 
 
 	// opengl core profile 4.0
+	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);  
+	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // Major = 4
 	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); 
-	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);  
+ 
+	
 	//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);   //不可改变大小  
 	//glfwWindowHint(GLFW_DECORATED, GL_FALSE);   //没有边框和标题栏  
 
@@ -81,7 +83,7 @@ void demo_app::run(demo_app *app)
 	fprintf(stderr, "VERSION: %s\n", (char *)glGetString(GL_VERSION));
 	fprintf(stderr, "RENDERER: %s\n", (char *)glGetString(GL_RENDERER));
 
-	
+	init();
 
 	while (!glfwWindowShouldClose(pWindow))
 	{
@@ -91,6 +93,7 @@ void demo_app::run(demo_app *app)
 		glfwPollEvents();
 	}
 
+	release();
 
 	glfwDestroyWindow(pWindow);
 

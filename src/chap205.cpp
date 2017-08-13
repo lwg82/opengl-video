@@ -6,6 +6,13 @@ class chap203 : public demo_app
 {
 	public:
 
+		struct float3
+		{
+			GLfloat x,y,z;
+		};
+
+		float3 _circle[362]; // 一个三角形有3个顶点
+
 		virtual void init()
 		{
 			
@@ -37,30 +44,30 @@ class chap203 : public demo_app
 			// 画圆
 			GLfloat cx = 100.0f;
 			GLfloat cy = 100.0f;
+			GLfloat cz = 0;
 			GLfloat r  = 80.0f;
 
-			// 划线
+			// 圆心
+			_circle[0].x = cx;
+			_circle[0].y = cy;
+			_circle[0].z = cz;
 
-	
-			glBegin(GL_TRIANGLES);
-
-			for(int i=0; i<360; ++i)
+		
+			for(int i=0; i<=360; ++i)
 			{
-				
-				GLfloat x1 = cosf((double)i * M_PI/180) * r + cx;
-				GLfloat y1 = sinf((double)i * M_PI/180) * r + cy;
-
-				GLfloat x2 = cosf((double)(i+1) * M_PI/180) * r + cx;
-				GLfloat y2 = sinf((double)(i+1) * M_PI/180) * r + cy;	
-
-				glVertex3f(cx, cy, 0);
-				glVertex3f(x1, y1, 0);
-				glVertex3f(x2, y2, 0);
-				
-				
+				_circle[i + 1].x = cosf((double)i * M_PI/180) * r + cx;
+				_circle[i + 1].y = sinf((double)i * M_PI/180) * r + cy;
+				_circle[i + 1].z = cz;
 			}
+			
+			// 起用顶点模式
+			glEnableClientState(GL_VERTEX_ARRAY);
+			glVertexPointer(3,              // 维度
+					GL_FLOAT, 
+					0,              // 偏移量  sizeof(float3)
+					_circle);
 
-			glEnd();
+			glDrawArrays(GL_TRIANGLE_FAN, 0, 362);
 	
 		}
 };

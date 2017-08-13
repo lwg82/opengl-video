@@ -10,6 +10,7 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <cmath>
 
 
 #define UNUSED_PARAMETER(param) (void)param
