@@ -6,6 +6,20 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
+option(USE_GLEW    "Use glew library" ON)
+
+
+# c++11
+include(CheckCXXCompilerFlag)  
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)  
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)  
+if(COMPILER_SUPPORTS_CXX11)  
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")  
+elseif(COMPILER_SUPPORTS_CXX0X)  
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")  
+else()  
+     message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")  
+endif()  
 
 # OpenGL
 find_package(OpenGL REQUIRED)
@@ -24,7 +38,7 @@ else()
 	#message(STATUS  ${GLUT_DEFINITIONS})
 endif(NOT OPENGL_FOUND)
 
-# GLEW
+
 
 # GLFW
 if(UNIX)
@@ -53,17 +67,35 @@ elseif(WIN32)
 	endif(MSVC14)
 endif()
 
+if(USE_GLEW)
+	set(GLEW_INCLUDE /usr/include)
+	set(GLEW_LIBRARY /usr/lib64)
+
+	message(STATUS "glew:\n${GLEW_INCLUDE} \n${GLEW_LIBRARY}")
+
+
+	include_directories(GLEW_INCLUDE)
+	link_directories(GLEW_INCLUDE)
+
+	set(COMMON_LIBS ${COMMON_LIBS}
+		GLEW.a
+	)
+endif()
 
 
 
 set(EXAMPLES
 	draw_point
 	chap201
-	chap202)
+	chap202
+	chap203)
 
 
 foreach(EXAMPLE ${EXAMPLES})
-	add_executable(${EXAMPLE} WIN32 src/${EXAMPLE}.cpp)
+	add_executable(${EXAMPLE} WIN32 
+			src/demo.h
+			src/demo.cpp
+			src/${EXAMPLE}.cpp)
 	set_property(TARGET ${EXAMPLE} PROPERTY DEBUG_POSTFIX _d)
   	target_link_libraries(${EXAMPLE} ${COMMON_LIBS})
 endforeach()
