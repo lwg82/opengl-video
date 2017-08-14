@@ -2,11 +2,15 @@
 
 
 //GLEW  
-//#define GLEW_STATIC  
-//#include <GL/glew.h>  
+#define GLEW_STATIC  
+#include <GL/glew.h>  
 
 #include <GLFW/glfw3.h>
 
+
+#if _WIN32
+	#define _USE_MATH_DEFINES
+#endif
 
 #include <cstdio>
 #include <cstdlib>

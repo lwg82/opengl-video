@@ -61,6 +61,10 @@ if(UNIX)
 
 	
 elseif(WIN32)
+
+	include_directories(include)
+	link_directories(${PROJECT_SOURCE_DIR}/lib)
+	
 	if(MSVC14)
 		set(COMMON_LIBS glfw3_2015 ${OPENGL_LIBRARIES})
 	else()
@@ -107,7 +111,7 @@ set(EXAMPLES
 
 
 foreach(EXAMPLE ${EXAMPLES})
-	add_executable(${EXAMPLE} WIN32 
+	add_executable(${EXAMPLE}  
 			src/demo.h
 			src/demo.cpp
 			src/${EXAMPLE}.cpp)
