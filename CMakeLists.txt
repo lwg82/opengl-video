@@ -6,8 +6,9 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
-option(USE_GLEW        "Use glew library" OFF)
-option(COMPILE_CHAP02  "Compile chap02"   ON)
+option(USE_GLEW        "Use glew library")
+option(COMPILE_CHAP02  "Compile chap02")
+option(COMPILE_CHAP03  "Compile chap03"   TRUE)
 
 
 # c++11
@@ -57,7 +58,7 @@ if(UNIX)
 	include_directories(${GLFW_INCLUDE_DIRS})
 	link_directories(${GLFW_LIBRARY_DIRS})
 
-	set(COMMON_LIBS glfw3 X11 Xrandr Xinerama Xi Xxf86vm Xcursor GL rt dl m pthread)
+	set(COMMON_LIBS glfw3 X11 Xrandr Xinerama Xi Xxf86vm Xcursor GL GLU rt dl m pthread)
 
 	
 elseif(WIN32)
@@ -87,23 +88,39 @@ if(USE_GLEW)
 	)
 endif()
 
-set(COMPILE_EXAMPLE
-)	
+	
 
 if(COMPILE_CHAP02)
-	set(COMPILE_EXAMPLE
-	${COMPILE_EXAMPLE}
-	draw_point
-	chap201
-	chap202
-	chap203
-	chap204
-	chap205
-	chap206
-	chap207
-	chap208
-	chap209)
+
+message(STATUS "chap02 compile...")
+
+set(COMPILE_EXAMPLE
+${COMPILE_EXAMPLE}
+draw_point
+chap201
+chap202
+chap203
+chap204
+chap205
+chap206
+chap207
+chap208
+chap209)
 endif()
+
+
+if(COMPILE_CHAP03)
+
+message(STATUS "chap03 compile...")
+
+set(COMPILE_EXAMPLE
+	${COMPILE_EXAMPLE}
+	chap301
+	chap302)
+
+endif()
+
+
 
 set(EXAMPLES
 	${COMPILE_EXAMPLE}

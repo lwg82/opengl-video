@@ -2,10 +2,16 @@
 
 
 //GLEW  
-#define GLEW_STATIC  
-#include <GL/glew.h>  
+//#define GLEW_STATIC  
+//#include <GL/glew.h>  
 
+
+// glu
+#include <GL/glu.h>
+
+// GLFW
 #include <GLFW/glfw3.h>
+
 
 
 #if _WIN32
