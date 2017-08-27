@@ -5,7 +5,7 @@
 using namespace demo;
 
 
-demo_app::demo_app():pWindow(nullptr),width(400), height(300)
+demo_app::demo_app():pWindow(nullptr),width(800), height(600)
 {
 }
 
