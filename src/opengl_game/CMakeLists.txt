@@ -32,8 +32,9 @@ endif()
 
 set(COMPILE_EXAMPLE
 			${COMPILE_EXAMPLE}
-			#ogc_chap0401
-			ogc_chap0402
+			chap01
+			chap0102
+			chap0103
 		)
 
 
