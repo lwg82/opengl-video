@@ -1,12 +1,16 @@
 #include "demo.h"
 
-
+#include <cstring>
 
 using namespace demo;
 
 
-demo_app::demo_app():pWindow(nullptr),width(800), height(600)
+demo_app *demo_app::app=nullptr;
+
+demo_app::demo_app():pWindow(nullptr),width(800), height(600),_rotate_angle(0.0f)
 {
+	_eye.x = 0.0f; _eye.y = 0.0f; _eye.z = 0.0f;
+	_lookAt.x = 0.0f; _lookAt.y = 0.0f; _lookAt.z = 0.0f;
 }
 
 
@@ -22,8 +26,10 @@ void demo_app::glfwErrorCallback(int error, const char *description)
 } 
 
 
-void demo_app::run(demo_app *app)
+void demo_app::run(demo_app *a)
 {
+	app = a;
+
 	if (!glfwInit())
 	{
 	    fprintf(stderr, "Failed to initialize GLFW\n");
@@ -83,6 +89,8 @@ void demo_app::run(demo_app *app)
 	fprintf(stderr, "VERSION: %s\n", (char *)glGetString(GL_VERSION));
 	fprintf(stderr, "RENDERER: %s\n", (char *)glGetString(GL_RENDERER));
 
+
+	glfwSetKeyCallback(pWindow, glfw_onKey);
 	init();
 
 	while (!glfwWindowShouldClose(pWindow))
@@ -139,3 +147,104 @@ void demo_app::release()
 {
 
 }	
+
+
+void demo_app::OnKey(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	printf("key: %d \n", key);
+	switch(key)
+	{
+		case GLFW_KEY_UP:
+			_eye.z -= 0.1f;
+		break;
+
+		case GLFW_KEY_DOWN:
+			_eye.z += 0.1f;
+		break;
+
+		case GLFW_KEY_LEFT:
+			_eye.x -= 0.1f;
+		break;
+
+		case GLFW_KEY_RIGHT:
+			_eye.x += 0.1f;
+		break;
+	}
+
+}
+
+void demo_app::draw_cube(GLfloat x, GLfloat y, GLfloat z)
+{
+		struct vertex_color cube[] =
+			{
+				
+				// front
+				{255,0,0,1,-1.0f, -1.0f,  1.0f},
+				{255,0,0,1,-1.0f,  1.0f,  1.0f},
+				{255,0,0,1, 1.0f,  1.0f,  1.0f},
+				{255,0,0,1, 1.0f, -1.0f,  1.0f},
+
+				// right
+				{255,255,0, 1, 1.0f, -1.0f,  -1.0f},
+				{255,255,0, 1, 1.0f, -1.0f,   1.0f},
+				{255,255,0, 1, 1.0f,  1.0f,   1.0f},
+				{255,255,0, 1, 1.0f,  1.0f,  -1.0f},
+
+				// bottom
+				{ 0,0,255,1, -1.0f,  -1.0f,   1.0f},
+				{ 0,0,255,1, -1.0f,  -1.0f,  -1.0f},
+				{ 0,0,255,1,  1.0f,  -1.0f,  -1.0f},
+				{ 0,0,255,1,  1.0f,  -1.0f,   1.0f},
+
+				
+
+				// left
+				{0,255,0,1, -1.0f, -1.0f,  -1.0f},
+				{0,255,0,1, -1.0f, -1.0f,   1.0f},
+				{0,255,0,1, -1.0f,  1.0f,   1.0f},
+				{0,255,0,1, -1.0f,  1.0f,  -1.0f},
+
+				// top
+				{0,255,255,1, -1.0f, 1.0f,   1.0f},
+				{0,255,255,1, -1.0f, 1.0f,  -1.0f},
+				{0,255,255,1,  1.0f,  1.0f,  -1.0f},
+				{0,255,255,1,  1.0f,  1.0f,   1.0f},
+
+				// back
+				{255,0,255,1, -1.0f, -1.0f,  -1.0f},
+				{255,0,255,1, -1.0f,  1.0f,  -1.0f},
+				{255,0,255,1,  1.0f,  1.0f,  -1.0f},
+				{255,0,255,1,  1.0f, -1.0f,  -1.0f}
+
+			};
+
+			// 颜色
+			glColor3f(0, 1, 0);
+
+			glTranslatef(x, y, z);
+			// 旋转
+			_rotate_angle += 1.0f;
+			glRotatef(_rotate_angle, 1, 1, 1);
+
+			glInterleavedArrays(GL_C4UB_V3F, 0, cube);
+			glDrawArrays(GL_QUADS, 0, 24);  
+
+}
+
+
+GLenum  demo_app::check_error()
+{
+	GLenum code;
+	
+	const GLubyte *error_string = NULL;
+
+	code = glGetError();
+	
+	if(GL_NO_ERROR != code)
+	{
+		error_string = gluErrorString(code);
+		fprintf(stderr, "OpenGL error: %d,%s \n", code, error_string);
+	}
+
+	return code;
+}

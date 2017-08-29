@@ -2,6 +2,8 @@
 
 project (opengl-video)
 
+option(COMPILE_CHAP02        "Compile chap02")
+option(COMPILE_CHAP06        "Compile chap06" TRUE)
 
 #GLFW
 if(UNIX)
@@ -35,6 +37,8 @@ if(UNIX)
 	endif()
 
 
+if(COMPILE_CHAP02)
+
 set(COMPILE_EXAMPLE
 			${COMPILE_EXAMPLE}
 			draw_point
@@ -56,7 +60,16 @@ set(COMPILE_EXAMPLE
 			chap306
 		)
 
+endif(COMPILE_CHAP02)
 
+
+if(COMPILE_CHAP06)
+set(COMPILE_EXAMPLE
+			${COMPILE_EXAMPLE}
+			chap0601
+)
+
+endif(COMPILE_CHAP06)
 
 set(EXAMPLES
 	${COMPILE_EXAMPLE}
