@@ -40,7 +40,7 @@ class chap203 : public demo_app
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
 
-			gluLookAt (_eye.x, _eye.y, _eye.z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); 
+			_camera.update();
 			
 
 			glColor3f(0.7f, 1.0f, 0.3f);

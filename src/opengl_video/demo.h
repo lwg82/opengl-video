@@ -22,6 +22,8 @@
 #include <cstdlib>
 #include <cmath>
 
+#include "camera.h"
+
 
 #define UNUSED_PARAMETER(param) (void)param
 #define OUT_PUT_FUNTION_POSITON  printf("%s %d \n", __FUNCTION__, __LINE__);
@@ -85,6 +87,7 @@ namespace demo
 			struct float3 _eye;
 			struct float3 _lookAt;
 			
+			demo::camera  _camera;
 			
 	};
 }

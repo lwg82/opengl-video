@@ -77,7 +77,8 @@ set(EXAMPLES
 
 set(COMPILE_EXAMPLE_EXTR
 		demo.h
-		demo.cpp)
+		demo.cpp
+		camera.h)
 
 message(STATUS "comment libs:${COMMON_LIBS}\n")
 

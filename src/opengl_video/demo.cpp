@@ -155,21 +155,22 @@ void demo_app::OnKey(GLFWwindow* window, int key, int scancode, int action, int 
 	switch(key)
 	{
 		case GLFW_KEY_UP:
-			_eye.z -= 0.1f;
+			_camera.moveFront();
 		break;
 
 		case GLFW_KEY_DOWN:
-			_eye.z += 0.1f;
+			_camera.moveBack();
 		break;
 
 		case GLFW_KEY_LEFT:
-			_eye.x -= 0.1f;
+			_camera.moveLeft();
 		break;
 
 		case GLFW_KEY_RIGHT:
-			_eye.x += 0.1f;
+			_camera.moveRight();
 		break;
 	}
+	
 
 }
 
