@@ -41,7 +41,7 @@ else()
 endif(NOT OPENGL_FOUND)
 
 
-
+# GLEW
 if(USE_GLEW)
 	if(UNIX)
 		set(GLEW_INCLUDE /usr/include)
