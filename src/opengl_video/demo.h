@@ -25,6 +25,8 @@
 #include "camera.h"
 
 
+
+
 #define UNUSED_PARAMETER(param) (void)param
 #define OUT_PUT_FUNTION_POSITON  printf("%s %d \n", __FUNCTION__, __LINE__);
 
@@ -59,6 +61,10 @@ namespace demo
 			  {
 				app->OnKey(window, key, scancode, action, mods);
 			  }
+
+		public:
+			unsigned   CreateTexture(int w,int h,const void* data);
+			bool       CreateTextureFromImage(const char *fileName, GLuint &textureId);
 				
 		
 		protected:
@@ -79,8 +85,15 @@ namespace demo
 				float x,y,z;
 			};
 
-			void draw_cube(GLfloat x=0.0f, GLfloat y=0.0f, GLfloat z=-10.0f);
+			struct vertex_texture
+			{
+				GLfloat u,v;
+				GLfloat x,y,z;
+			};
 
+			void draw_cube(GLfloat x=0.0f, GLfloat y=0.0f, GLfloat z=-10.0f);
+			
+			
 			// 移动相机 gluLookAt
 			
 
@@ -88,6 +101,8 @@ namespace demo
 			struct float3 _lookAt;
 			
 			demo::camera  _camera;
+
+			
 			
 	};
 }

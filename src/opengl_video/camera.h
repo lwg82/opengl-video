@@ -66,7 +66,7 @@ public:
     void    update()
     {
         gluLookAt(_eye.x,_eye.y,_eye.z,_lookat.x, _lookat.y,_lookat.z,_up.x,_up.y,_up.z);
-	printf("%.2f,%.2f,%.2f %.2f,%.2f,%.2f \n", _eye.x, _eye.y, _eye.z,_lookat.x, _lookat.y,_lookat.z);
+	//printf("%.2f,%.2f,%.2f %.2f,%.2f,%.2f \n", _eye.x, _eye.y, _eye.z,_lookat.x, _lookat.y,_lookat.z);
     }
 };
 

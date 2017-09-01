@@ -2,6 +2,8 @@
 
 #include <cstring>
 
+#include "FreeImage/FreeImage.h"
+
 using namespace demo;
 
 
@@ -178,7 +180,6 @@ void demo_app::draw_cube(GLfloat x, GLfloat y, GLfloat z)
 {
 		struct vertex_color cube[] =
 			{
-				
 				// front
 				{255,0,0,1,-1.0f, -1.0f,  1.0f},
 				{255,0,0,1,-1.0f,  1.0f,  1.0f},
@@ -233,6 +234,7 @@ void demo_app::draw_cube(GLfloat x, GLfloat y, GLfloat z)
 }
 
 
+
 GLenum  demo_app::check_error()
 {
 	GLenum code;
@@ -248,4 +250,52 @@ GLenum  demo_app::check_error()
 	}
 
 	return code;
+}
+
+unsigned    demo_app::CreateTexture(int w,int h,const void* data)
+{
+	unsigned    texId;
+	glGenTextures(1,&texId);
+	glBindTexture(GL_TEXTURE_2D,texId);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,w,h,0,GL_RGBA,GL_UNSIGNED_BYTE,data);
+
+	return  texId;
+}
+
+bool demo_app::CreateTextureFromImage(const char *fileName, GLuint &textureId)
+{
+	//1 获取图片格式
+	FREE_IMAGE_FORMAT fif = FreeImage_GetFileType(fileName, 0);
+
+	if(FIF_UNKNOWN == fif)
+		return false;
+
+	//2 加载图片
+	FIBITMAP *dib = FreeImage_Load(fif, fileName, 0);
+
+	FREE_IMAGE_COLOR_TYPE type    =   FreeImage_GetColorType(dib);
+
+ 	//! 获取数据指针
+        FIBITMAP*   temp    =   dib;
+        dib =   FreeImage_ConvertTo32Bits(dib);
+                FreeImage_Unload(temp);
+
+        BYTE*   pixels =   (BYTE*)FreeImage_GetBits(dib);
+        int     width   =   FreeImage_GetWidth(dib);
+        int     height  =   FreeImage_GetHeight(dib);
+
+        for (int i = 0 ;i < width * height * 4 ; i+=4 )
+        {
+            BYTE temp       =   pixels[i];
+            pixels[i]       =   pixels[i + 2];
+            pixels[i + 2]   =   temp;
+        }
+
+        textureId =   CreateTexture(width,height,pixels);
+
+        FreeImage_Unload(dib);
+       
+	return true;
 }

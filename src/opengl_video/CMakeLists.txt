@@ -21,20 +21,31 @@ if(UNIX)
 		include_directories(${GLFW_INCLUDE_DIRS})
 		link_directories(${GLFW_LIBRARY_DIRS})
 
+
 		set(COMMON_LIBS glfw3 X11 Xrandr Xinerama Xi Xxf86vm Xcursor GL GLU rt dl m pthread)
 
 	
-	elseif(WIN32)
+elseif(WIN32)
 
-		include_directories(include)
-		link_directories(${PROJECT_SOURCE_DIR}/lib)
-	
-		if(MSVC14)
-			set(COMMON_LIBS glfw3_2015 ${OPENGL_LIBRARIES})
-		else()
-			set(COMMON_LIBS glfw3 ${OPENGL_LIBRARIES})
-		endif(MSVC14)
-	endif()
+	include_directories(include)
+	link_directories(${PROJECT_SOURCE_DIR}/lib)
+
+	if(MSVC14)
+		set(COMMON_LIBS glfw3_2015 ${OPENGL_LIBRARIES})
+	else()
+		set(COMMON_LIBS glfw3 ${OPENGL_LIBRARIES})
+	endif(MSVC14)
+endif()
+
+# 添加 freeimage
+if(UNIX)
+	include_directories(${CMAKE_SOURCE_DIR}/include)
+	link_directories(${CMAKE_SOURCE_DIR}/lib)
+
+	message(STATUS "lib:\n${CMAKE_SOURCE_DIR}/lib")
+
+	set(COMMON_LIBS ${COMMON_LIBS}  libfreeimage.a) # 静态库
+endif()
 
 
 if(COMPILE_CHAP02)
@@ -67,6 +78,8 @@ if(COMPILE_CHAP06)
 set(COMPILE_EXAMPLE
 			${COMPILE_EXAMPLE}
 			chap0601
+			texture01
+			texture02
 )
 
 endif(COMPILE_CHAP06)
