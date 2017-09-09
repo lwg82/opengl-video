@@ -20,7 +20,7 @@ class chap203 : public demo_app
 			// texture
 			glEnable(GL_TEXTURE_2D);
 			
-			CreateTextureFromImage("1.jpg", _texture_id);
+			CreateTextureFromImage("bkg.jpg", _texture_id);
 			
 		}
 
@@ -69,7 +69,7 @@ class chap203 : public demo_app
 			
 			//glColor3f(0, 1, 0);
 
-#if 0
+#if 1
 		        glInterleavedArrays( GL_T2F_V3F, sizeof(vertex_texture), cube_tex );
 #else
 			glEnableClientState(GL_VERTEX_ARRAY);

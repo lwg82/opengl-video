@@ -21,11 +21,14 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
+#include <cstring>
+
+#include "CELLMath.hpp"
+
+using namespace CELL;
 
 #include "camera.h"
-
-
-
+#include "camera3rd.h"
 
 #define UNUSED_PARAMETER(param) (void)param
 #define OUT_PUT_FUNTION_POSITON  printf("%s %d \n", __FUNCTION__, __LINE__);
@@ -33,10 +36,7 @@
 namespace demo
 {
 
-	struct float3
-	{
-		GLfloat x,y,z;
-	};
+	
 
 	class demo_app
 	{
@@ -56,10 +56,34 @@ namespace demo
 
 		public:
 			// 键盘事件
-			  void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods);
+			  virtual void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods);
 			  static void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 			  {
 				app->OnKey(window, key, scancode, action, mods);
+			  }
+
+			  virtual void OnMouse(GLFWwindow* window, int key, int action, int mods);
+			  static void glfw_OnMouse(GLFWwindow* window, int key, int action, int mods)	
+			  {
+				app->OnMouse(window, key, action, mods);		
+			  }
+			
+                          virtual void OnCursorPosCallback(GLFWwindow* window, double xpos, double ypos);
+			  static void glfw_OnCursorPosCallback(GLFWwindow* window, double xpos, double ypos)
+			  {
+				app->OnCursorPosCallback(window, xpos, ypos);
+			  }
+
+			  virtual void OnScroll(GLFWwindow* window, double xoffset, double yoffset);
+			  static void glfw_OnScroll(GLFWwindow* window, double xoffset, double yoffset)
+			  {
+				app->OnScroll(window, xoffset, yoffset);
+			  }
+
+			  virtual void OnWindowSize(GLFWwindow *window, int width, int height);
+		          static void glfw_OnWindowSize(GLFWwindow *window, int width, int height)
+			  {
+				app->OnWindowSize(window, width, height);
 			  }
 
 		public:
@@ -73,6 +97,8 @@ namespace demo
 			int         height;
 
 			static      demo_app  *app;
+
+			
 
 		protected:
 
@@ -93,16 +119,21 @@ namespace demo
 
 			void draw_cube(GLfloat x=0.0f, GLfloat y=0.0f, GLfloat z=-10.0f);
 			
+			// 绘制地面
 			
+
 			// 移动相机 gluLookAt
 			
 
-			struct float3 _eye;
-			struct float3 _lookAt;
+			float3 _eye;
+			float3 _lookAt;
 			
-			demo::camera  _camera;
+			
 
-			
+			bool        left_button_pressed;
+			int2        _mouse_pos;
+
+
 			
 	};
 }

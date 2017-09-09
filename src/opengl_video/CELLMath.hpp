@@ -9,6 +9,11 @@
 #include <map>
 #include <limits>
 
+/*
+角度转弧度 π/180×角度
+弧度变角度 180/π×弧度
+
+*/
 namespace CELL
 {
 
@@ -83,7 +88,8 @@ namespace CELL
         return  intdata.int64Data;
     }
 
-
+   //-----------------------------------------------------------------------
+   // 二维向量
     template <typename T>
     struct tvec2
     {
@@ -394,7 +400,7 @@ namespace CELL
                         );
     }
 
-
+   //--------------------------------------------------------------
     template <typename T>
     struct tvec3
     {
@@ -617,6 +623,7 @@ namespace CELL
         return  left.x < right.x && left.y < right.y && left.z < right.z;
     }
 
+// 沿X轴旋转
     template <typename T>
     tvec3<T> rotateX(const tvec3<T>& v, T angle)
     {
@@ -1049,6 +1056,8 @@ namespace CELL
             v.y - T(1),
             v.z - T(1));
     }
+
+    // -----------------------------------------------------------
     template <typename T>
     struct tvec4
     {
@@ -1443,6 +1452,9 @@ namespace CELL
         return (v1.x != v2.x) || (v1.y != v2.y) || (v1.z != v2.z) || (v1.w != v2.w);
     }
 
+    /****************************************
+    *    矩形
+    ****************************************/
     template<typename T>
     class   trect
     {
@@ -1491,6 +1503,9 @@ namespace CELL
         T    _bottom;
     };
 
+  /****************************************
+    *    2×2 矩阵
+    ****************************************/
     template <typename T>
     struct tmat2x2
     {
@@ -1786,7 +1801,9 @@ namespace CELL
     }
 
 
-
+    /****************************************
+    *    3×3 矩阵
+    ****************************************/
     template <typename T>
     struct tmat3x3
     {
@@ -2261,7 +2278,9 @@ namespace CELL
         return (m1[0] != m2[0]) || (m1[1] != m2[1]) || (m1[2] != m2[2]);
     }
 
-
+   /****************************************
+    *    4×4 矩阵
+    ****************************************/
 
     template <typename T>
     struct tmat4x4
@@ -3445,17 +3464,18 @@ namespace CELL
                             x.x * y.y - y.x * x.y
                 );
         }
-
+// 向量模的倒数
     template <typename T>
     T inversesqrt(T x)
     {
         return T(1) / sqrt(x);
     }
 
+// 归一化
     template <typename T>
         tvec2<T> normalize(tvec2<T> const & x)
         {
-                typename tvec2<T>::value_type sqr = x.x * x.x + x.y * x.y;
+                typename tvec2<T>::value_type sqr = x.x * x.x + x.y * x.y; // x^2+y^2
                 return x * inversesqrt(sqr);
         }
 
@@ -4106,6 +4126,7 @@ namespace CELL
         return res;
     }
 
+    // 透视投影
     template <typename valType>
     tmat4x4<valType> perspective(valType fovy, valType aspect, valType zNear, valType zFar)
     {
@@ -4193,6 +4214,7 @@ namespace CELL
         return  scale(res, tvec3<T>(T(viewport[2]) / delta.x, T(viewport[3]) / delta.y, T(1)));
     }
 
+   // 观察点矩阵 glulookat
     template <typename T>
     tmat4x4<T>    lookAt
                     (
@@ -5446,15 +5468,15 @@ namespace CELL
                     other._vMax.y <= this->_vMax.y ;
         }
     };
-
+    // 射线
     template<typename T>
     class  tray
     {
         typedef T           value_type;
         typedef tray<T>     type;
     protected:
-        tvec3<T>    _origin;
-        tvec3<T>    _direction;
+        tvec3<T>    _origin;            // 射线位置
+        tvec3<T>    _direction;         // 射线方向
     public:
         tray():
             _origin(value_type(0),value_type(0),value_type(0)),

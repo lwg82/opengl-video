@@ -24,9 +24,9 @@ class camera
 public:
     float3  _eye;
     float3  _lookat;
-    //! 定义了摄像机的y轴
-    float3  _up;
-    float3  _right;
+    
+    float3  _up;           //! 定义了摄像机的y轴
+    float3  _right;        //  定义摄像机x轴
     float   _speed;
   
     camera(void)
@@ -51,17 +51,30 @@ public:
 
     void    moveFront()
     {
-        float3  dir =   normalize(_lookat - _eye);
+        float3  dir =   normalize(_lookat - _eye); // 求z轴方向
         _eye    +=  dir * _speed;
         _lookat +=  dir * _speed;
-
     }
+    
     void    moveBack()
     {
         float3  dir =   normalize(_lookat - _eye);
         _eye    -=  dir * _speed;
         _lookat -=  dir * _speed;
     }
+
+    void rotateY(float angle)
+    {
+	float3 dir = normalize(_lookat - _eye);
+	
+        float   len = length(_lookat - _eye);
+
+	float3  dir1 = CELL::rotateY(dir, angle);
+
+	_lookat = _eye + dir1*len;
+	_right  = normalize(cross(dir1, _up)); // 求叉积
+    }
+    
 
     void    update()
     {

@@ -3,6 +3,7 @@
 project (opengl-video)
 
 option(COMPILE_CHAP02        "Compile chap02")
+option(COMPILE_CHAP04        "Compile chap04 -- texture")
 option(COMPILE_CHAP06        "Compile chap06" TRUE)
 
 #GLFW
@@ -44,7 +45,7 @@ if(UNIX)
 
 	message(STATUS "lib:\n${CMAKE_SOURCE_DIR}/lib")
 
-	set(COMMON_LIBS ${COMMON_LIBS}  libfreeimage.a) # 静态库
+	set(COMMON_LIBS ${COMMON_LIBS}  freeimage) # 静态库
 endif()
 
 
@@ -73,13 +74,28 @@ set(COMPILE_EXAMPLE
 
 endif(COMPILE_CHAP02)
 
+if(COMPILE_CHAP04)
+	
+set(COMPILE_EXAMPLE
+			${COMPILE_EXAMPLE}
+			texture01
+			texture02
+			texture03
+			texture04
+			texture05
+			texture06
+)
+
+endif(COMPILE_CHAP04)
+
 
 if(COMPILE_CHAP06)
 set(COMPILE_EXAMPLE
 			${COMPILE_EXAMPLE}
-			chap0601
-			texture01
-			texture02
+			#chap0601
+			#chap0602
+			#chap0603
+			chap0604
 )
 
 endif(COMPILE_CHAP06)
@@ -91,7 +107,9 @@ set(EXAMPLES
 set(COMPILE_EXAMPLE_EXTR
 		demo.h
 		demo.cpp
-		camera.h)
+		camera.h
+		imager.h
+		camera3rd.h)
 
 message(STATUS "comment libs:${COMMON_LIBS}\n")
 
