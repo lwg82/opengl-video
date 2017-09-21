@@ -66,8 +66,8 @@ endif()
 
 
 #add_subdirectory(opengl_game)
-add_subdirectory(opengl_video)
-
+#add_subdirectory(opengl_video)
+add_subdirectory(lua-workspace)
 
 
 

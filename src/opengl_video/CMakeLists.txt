@@ -92,10 +92,13 @@ endif(COMPILE_CHAP04)
 if(COMPILE_CHAP06)
 set(COMPILE_EXAMPLE
 			${COMPILE_EXAMPLE}
-			#chap0601
-			#chap0602
-			#chap0603
+			chap0601
+			chap0602
+			chap0603
 			chap0604
+			chap0605
+			chap0606
+			chap0607
 )
 
 endif(COMPILE_CHAP06)
