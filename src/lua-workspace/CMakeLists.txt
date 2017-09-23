@@ -23,7 +23,7 @@ endif()
 
 set(COMPILE_EXAMPLE
 			${COMPILE_EXAMPLE}
-			chap01
+			#chap01
 			chap02
 		)
 
