@@ -25,6 +25,8 @@ set(COMPILE_EXAMPLE
 			${COMPILE_EXAMPLE}
 			#chap01
 			chap02
+			chap03
+			chap04
 		)
 
 
